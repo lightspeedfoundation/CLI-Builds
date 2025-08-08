@@ -1,0 +1,28 @@
+{
+  "name": "cli-templates",
+  "version": "0.1.0",
+  "private": false,
+  "license": "GPL-3.0-only",
+  "description": "Community-contributed starter templates for building with Lightspeed CLI.",
+  "bin": {
+    "cli-templates-wizard": "bin/wizard.js"
+  },
+  "scripts": {
+    "wizard": "node bin/wizard.js",
+    "validate": "node scripts/validate.js",
+    "build:index": "node scripts/build-index.js"
+  },
+  "engines": {
+    "node": ">=16"
+  },
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "boxen": "^7.1.1",
+    "figlet": "^1.7.0",
+    "gradient-string": "^2.0.2",
+    "inquirer": "^9.3.6",
+    "ora": "^8.0.1",
+    "simple-git": "^3.27.0"
+  }
+}
+
