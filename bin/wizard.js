@@ -28,7 +28,7 @@ function ensureDir(dir) {
 }
 
 function loadSchema() {
-  const schemaPath = path.join(process.cwd(), 'templates', 'schema.json');
+  const schemaPath = path.join(process.cwd(), 'builds', 'schema.json');
   return JSON.parse(fs.readFileSync(schemaPath, 'utf8'));
 }
 
@@ -213,14 +213,35 @@ async function main() {
 
     if (answers.submitPr) {
       const title = `Add project: ${entry.name} (${entry.slug})`;
+      const checklist = [
+        '- [X] My project repository is licensed under GPL-3.0 (or compatible) and includes a LICENSE file',
+        '- [X] I attest this is my original work (no plagiarism)',
+        '- [X] `npm run validate` passes locally'
+      ].join('\n');
+      const details = [
+        `- Category: ${entry.category}`,
+        `- Repository: ${entry.repository.url}${entry.repository.branch ? ` (branch: ${entry.repository.branch})` : ''}`,
+        `- Project X handle: ${entry.projectXHandle}`,
+        `${entry.description ? `- One-liner: ${entry.description}` : ''}`
+      ].filter(Boolean).join('\n');
       const body = [
+        '### Summary',
+        '',
+        'Add a completed CLI Build (project) to the registry.',
+        '',
+        '### Checklist',
+        '',
+        checklist,
+        '',
+        '### Project details',
+        '',
+        details,
+        '',
+        '### Notes',
+        '',
         'If your project is ready and properly licensed under GPL v3, submit your pull request to be listed.',
         '',
-        'Note: Do not submit pull requests directly copying other peoples\' work. Direct plagiarism will not be accepted.',
-        '',
-        `Category: ${entry.category}`,
-        `Repository: ${entry.repository.url}${entry.repository.branch ? ` (branch: ${entry.repository.branch})` : ''}`,
-        `Project X handle: ${entry.projectXHandle}`
+        'Note: Do not submit pull requests directly copying other peoples\' work. Direct plagiarism will not be accepted.'
       ].join('\n');
 
       const created = tryGhPrCreate(branchName, title, body);
