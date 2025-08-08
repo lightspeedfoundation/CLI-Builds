@@ -1,4 +1,4 @@
-### CLI-Templates
+### CLI-Builds
 
 An open, collaborative registry of starter templates for building AI tools, apps, bots, and games that integrate with the Lightspeed CLI wallet.
 
@@ -21,15 +21,15 @@ Get a CLI wallet here: (Link coming soon)
 
 1) Fork this repo on GitHub
 2) Clone and install
-   - `git clone https://github.com/<you>/CLI-Templates.git`
-   - `cd CLI-Templates`
+   - `git clone https://github.com/<you>/CLI-Builds.git`
+   - `cd CLI-Builds`
    - `npm install`
 3) Run the wizard and answer a few questions
    - `npm run wizard`
    - Use a real template repo URL that ends with `.git`
    - Use a simple Project X handle like `@your_handle`
 4) Review + validate
-   - The wizard writes a file in `templates/entries/your-slug.json`
+   - The wizard writes a file in `builds/entries/your-slug.json`
    - `npm run validate`
 5) Push a branch and open a PR
    - If the wizard created a branch for you, push it: `git push --set-upstream origin <branch-name>`
@@ -47,8 +47,8 @@ Get a CLI wallet here: (Link coming soon)
 - Name, one-line description, and optional tags
 
 The wizard then:
-- Creates `templates/entries/<slug>.json`
-- Validates locally against `templates/schema.json`
+- Creates `builds/entries/<slug>.json`
+- Validates locally against `builds/schema.json`
 - Creates a feature branch and optionally offers to open a PR
 
 ---
@@ -71,7 +71,7 @@ See `CONTRIBUTING.md` for details.
   - `git config user.name "Your Name"`
   - `git config user.email "you@example.com"`
 - Wizard closed or you made a typo:
-  - Re-run `npm run wizard` or edit your file in `templates/entries/` and run `npm run validate`
+  - Re-run `npm run wizard` or edit your file in `builds/entries/` and run `npm run validate`
 - “unknown format \"date-time\" ignored” in validation:
   - Info only; our validator intentionally ignores that format. Safe to continue if there are no errors.
 - PR didn’t open automatically:
@@ -82,8 +82,8 @@ See `CONTRIBUTING.md` for details.
 ### Project structure
 
 - `bin/wizard.js` — interactive CLI
-- `templates/entries/` — one JSON file per submission
-- `templates/schema.json` — JSON Schema used by the validator and CI
+- `builds/entries/` — one JSON file per submission
+- `builds/schema.json` — JSON Schema used by the validator and CI
 - `scripts/validate.js` — schema validation utility (`npm run validate`)
 - `scripts/build-index.js` — optional index of all entries (`npm run build:index`)
 - `.github/` — PR template and CI workflow

@@ -11,7 +11,7 @@ const { execSync } = require('child_process');
 const simpleGit = require('simple-git');
 
 const REPO_OWNER = 'lightspeedfoundation';
-const REPO_NAME = 'CLI-Templates';
+const REPO_NAME = 'CLI-Builds';
 const DEFAULT_BASE_BRANCH = 'main';
 
 function toSlug(input) {
@@ -34,9 +34,9 @@ function loadSchema() {
 
 async function promptUser() {
   // Fancy header
-  const title = figlet.textSync('CLI Templates', { horizontalLayout: 'full' });
+  const title = figlet.textSync('CLI Builds', { horizontalLayout: 'full' });
   console.log(gradient.atlas.multiline(title));
-  console.log(colors.blueBright('» Community Template Submission «'));
+  console.log(colors.blueBright('» Completed Project Submission «'));
   const { default: inquirer } = await import('inquirer');
   const answers = await inquirer.prompt([
     {
@@ -48,7 +48,7 @@ async function promptUser() {
     {
       type: 'input',
       name: 'repoUrl',
-      message: 'Template repository (git URL ending with .git)',
+      message: 'Project repository (git URL ending with .git)',
       validate: (v) => /^(https?:\/\/|git@).+\.git$/.test(v) || 'Please enter a valid Git URL ending with .git'
     },
     {
@@ -66,7 +66,7 @@ async function promptUser() {
     {
       type: 'input',
       name: 'name',
-      message: 'Template name',
+      message: 'Project name',
       validate: (v) => v && v.trim().length > 1 || 'Please enter a short name'
     },
     {
@@ -84,7 +84,7 @@ async function promptUser() {
     {
       type: 'confirm',
       name: 'confirmGPL',
-      message: 'Confirm your template repository is GPL-3.0 licensed',
+      message: 'Confirm your project repository is GPL-3.0 licensed',
       default: true
     },
     {
@@ -134,7 +134,7 @@ function buildEntry(answers) {
 }
 
 function writeEntryFile(entry, filename) {
-  const dir = path.join(process.cwd(), 'templates', 'entries');
+  const dir = path.join(process.cwd(), 'builds', 'entries');
   ensureDir(dir);
   const filePath = path.join(dir, filename);
   fs.writeFileSync(filePath, JSON.stringify(entry, null, 2) + '\n');
@@ -143,13 +143,13 @@ function writeEntryFile(entry, filename) {
 
 async function gitCommitAndBranch(filePath, slug) {
   const git = simpleGit(process.cwd());
-  const branchName = `add-template/${slug}-${Date.now()}`;
+  const branchName = `add-build/${slug}-${Date.now()}`;
   try {
     await git.checkout(DEFAULT_BASE_BRANCH);
   } catch (_) {}
   await git.checkoutLocalBranch(branchName);
   await git.add([filePath]);
-  await git.commit(`feat(templates): add ${slug} template`);
+  await git.commit(`feat(builds): add ${slug} project`);
   return branchName;
 }
 
@@ -212,9 +212,9 @@ async function main() {
     console.log(colors.green(`\nCreated branch: ${branchName}`));
 
     if (answers.submitPr) {
-      const title = `Add template: ${entry.name} (${entry.slug})`;
+      const title = `Add project: ${entry.name} (${entry.slug})`;
       const body = [
-        'If you have completed your template and it is properly licensed under GPL v3, submit your pull request to be listed.',
+        'If your project is ready and properly licensed under GPL v3, submit your pull request to be listed.',
         '',
         'Note: Do not submit pull requests directly copying other peoples\' work. Direct plagiarism will not be accepted.',
         '',
@@ -228,14 +228,14 @@ async function main() {
         console.log('\nTo submit your PR manually:');
         console.log('1) Fork this repo on GitHub');
         console.log(`2) Push your branch: git push --set-upstream origin ${branchName}`);
-        console.log('3) Open a PR against lightspeedfoundation/CLI-Templates with base=main');
+        console.log('3) Open a PR against lightspeedfoundation/CLI-Builds with base=main');
       }
     } else {
       console.log('\nYou can submit your PR later with:');
       console.log(`git push --set-upstream origin ${branchName}`);
     }
 
-    console.log(colors.cyan('\nThank you for contributing to CLI-Templates!'));
+    console.log(colors.cyan('\nThank you for contributing to CLI-Builds!'));
   } catch (err) {
     console.error(colors.red(`Error: ${err.message}`));
     process.exit(1);

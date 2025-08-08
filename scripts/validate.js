@@ -3,8 +3,8 @@ const path = require('path');
 const Ajv = require('ajv');
 
 const ROOT = process.cwd();
-const SCHEMA_PATH = path.join(ROOT, 'templates', 'schema.json');
-const ENTRIES_DIR = path.join(ROOT, 'templates', 'entries');
+const SCHEMA_PATH = path.join(ROOT, 'builds', 'schema.json');
+const ENTRIES_DIR = path.join(ROOT, 'builds', 'entries');
 
 function readJson(file) {
   return JSON.parse(fs.readFileSync(file, 'utf8'));

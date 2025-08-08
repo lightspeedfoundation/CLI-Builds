@@ -1,11 +1,11 @@
 {
-  "name": "cli-templates",
+  "name": "cli-builds",
   "version": "0.1.0",
   "private": false,
   "license": "GPL-3.0-only",
   "description": "Community-contributed starter templates for building with Lightspeed CLI.",
   "bin": {
-    "cli-templates-wizard": "bin/wizard.js"
+    "cli-builds-wizard": "bin/wizard.js"
   },
   "scripts": {
     "wizard": "node bin/wizard.js",
